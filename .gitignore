@@ -12,7 +12,6 @@ ENV/
 .ipynb_checkpoints
 *.ipynb_checkpoints
 
-# Data i modele - ważne!
 data/
 *.pth
 *.pt
@@ -29,3 +28,5 @@ wandb/
 # OS
 .DS_Store
 Thumbs.db
+
+*.png
