@@ -11,16 +11,16 @@ def get_samples(root):
     samples = []
     for s in (root/"train"/"good").iterdir():
         if s.suffix.lower() in VALID_EXTENSIONS:
-            samples.append({"filepath": s, "category": "OK", "defect_type": "good"})
+            samples.append({"filepath": s, "category": "OK", "defect_type": "good", "origin": "train"})
     for subfolder in (root/"test").iterdir():
         category = "OK" if subfolder.name == "good" else "NOK"
         for s in subfolder.iterdir():
             if s.suffix.lower() in VALID_EXTENSIONS:
-                samples.append({"filepath": s, "category": category, "defect_type": subfolder.name})
+                samples.append({"filepath": s, "category": category, "defect_type": subfolder.name, "origin": "test"})
     return samples
 
 def unique_stem(sample):
-    return f"{sample['defect_type']}__{sample['filepath'].stem}"
+    return f"{sample['origin']}_{sample['defect_type']}__{sample['filepath'].stem}"
 
 root = Path(__file__).resolve().parent.parent/"data"
 samples = get_samples(root)
