@@ -12,13 +12,6 @@ ENV/
 .ipynb_checkpoints
 *.ipynb_checkpoints
 
-data/
-*.pth
-*.pt
-*.onnx
-*.h5
-checkpoints/
-wandb/
 
 # IDE
 .vscode/

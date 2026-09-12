@@ -17,6 +17,11 @@ def get_samples(root):
         for s in subfolder.iterdir():
             if s.suffix.lower() in VALID_EXTENSIONS:
                 samples.append({"filepath": s, "category": category, "defect_type": subfolder.name, "origin": "test"})
+    # iterdir() nie gwarantuje stałej kolejności między uruchomieniami/maszynami —
+    # bez sortowania train_test_split(random_state=42) i tak daje różne wyniki
+    # przy różnej kolejności wejścia. Sortujemy po stabilnym kluczu dla pełnej
+    # odtwarzalności.
+    samples.sort(key=lambda s: (s["origin"], s["defect_type"], s["filepath"].stem))
     return samples
 
 def unique_stem(sample):
