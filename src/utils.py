@@ -81,6 +81,12 @@ def build_model_mobilenetv3(num_classes):
 
     return model
 
+def build_model_efficientnet_b0(num_classes):
+    model = torchvision.models.efficientnet_b0(weights=torchvision.models.EfficientNet_B0_Weights.DEFAULT)
+    model.classifier[1] = torch.nn.Linear(in_features= model.classifier[1].in_features, out_features=num_classes, bias=True)
+
+    return model
+
 def train_model(NUM_EPOCHS, PATIENCE, model, train_loader, val_loader, criterion, optimizer, device):
 
     best_val_loss = float("inf")
