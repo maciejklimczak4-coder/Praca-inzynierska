@@ -23,9 +23,9 @@ ENV/
 Thumbs.db
 
 
-.png
-.jpg
-.jpeg
+*.png
+*.jpg
+*.jpeg
 
 
 data_copy/
@@ -33,3 +33,5 @@ data/
 
 CLAUDE.md
 dziennik-postepow.md
+
+teoria/

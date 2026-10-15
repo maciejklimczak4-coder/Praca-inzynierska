@@ -87,6 +87,26 @@ def build_model_efficientnet_b0(num_classes):
 
     return model
 
+def build_cnn_block(in_channels, out_channels):
+    layer = torch.nn.Conv2d(in_channels, out_channels, kernel_size=3, padding=1, bias=False)
+    batch = torch.nn.BatchNorm2d(out_channels)
+    relu =  torch.nn.ReLU()
+    max_pool = torch.nn.MaxPool2d(2)
+
+    sequence = torch.nn.Sequential(layer, batch, relu, max_pool)
+
+    return sequence
+
+def build_model_custom_cnn(num_classes, droupout_p=0.3):
+    full_cnn = torch.nn.Sequential(build_cnn_block(3,16), build_cnn_block(16,32), build_cnn_block(32,64), build_cnn_block(64,128))
+    gap =  torch.nn.AdaptiveAvgPool2d(1)
+    flat = torch.nn.Flatten()
+    dropout = torch.nn.Dropout(droupout_p)
+    linear =  torch.nn.Linear(128,num_classes)
+    sequence = torch.nn.Sequential(full_cnn, gap, flat, dropout, linear)
+
+    return sequence
+
 def train_model(NUM_EPOCHS, PATIENCE, model, train_loader, val_loader, criterion, optimizer, device):
 
     best_val_loss = float("inf")
